@@ -33,6 +33,7 @@ matrix:
       env:
         - SPARK_VERSION="2.3.2"
         - JAVA_VERSION=openjdk8
+        - CODE_COVERAGE="true"
     - name: "Livy 0.5.0 (R release, openjdk8)"
       r: release
       env:
@@ -47,7 +48,7 @@ script:
   - |
     R CMD build .
     export SPARKLYR_LOG_FILE=/tmp/sparklyr.log
-    if [[ $SPARK_VERSION == "2.3.0" ]]; then
+    if [[ $CODE_COVERAGE == "true" ]]; then
       R CMD check --no-build-vignettes --no-manual --no-tests sparklyr*tar.gz
       travis_wait 45 Rscript .travis.R --coverage
     else
